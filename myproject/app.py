@@ -32,7 +32,7 @@ def empathy():
         print("GPT:", assistant_content)
         return jsonify({"empathyBot":assistant_content})
 
-print("os", os.getcwd())
+print("osssssssss: ", os.getcwd())
 
 
 def createContentList(data):
@@ -73,11 +73,9 @@ def get_recommendations(target_data, data, stop_word_list):
     # 가장 유사한 3개의 명언을 받아온다.
     sim_scores = sim_scores[1:4]
     print("sim_scores")
-    print(sim_scores)
 
     # 가장 유사한 10개의 명언의 인덱스를 얻는다.
     indices = [idx[0] for idx in sim_scores]
-    print("indices", indices)
     # 가장 유사한 10개의 명언의 작가 이름을 리턴한다.
     print('* 명언 추천')
     wise_saying_best3=[]
@@ -93,6 +91,9 @@ def get_recommendations(target_data, data, stop_word_list):
 
 @app.route('/wise-saying', methods=['POST'])
 def wise_saying():
+    
+    print("osssssssss: ", os.getcwd())
+
     getJson = request.get_json()
     user_content = getJson["userContent"]
     print("user_content: ", user_content)
@@ -103,14 +104,16 @@ def wise_saying():
     }
 
     # 1. 데이터 불러오기
-    with open('static/quotes_kor_data.json', 'r', encoding='UTF8') as file:
+    with open('home/ubuntu/quotes_kor_data.json', 'r', encoding='UTF8') as file:
         data_kor = json.load(file)
     data_kor.append(target_data)
     print("한글 명언 수: ", len(data_kor))
     
     # 2. 불용어 불러오기
-    with open('static/stop_word.json', 'r', encoding='utf-8') as file:
+    with open('home/ubuntu/stop_word.json', 'r', encoding='utf-8') as file:
         stop_word_list_kor = json.load(file)
+
+    print("제발;;;")
 
     # 3. TF-IDF 구하기, 명언 3개 추천
     wise_saying_best3 = get_recommendations(target_data, data_kor, stop_word_list_kor)
